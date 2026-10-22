@@ -1,0 +1,118 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Insert Coin — Original Arcade Games{% endblock %}
+
+{% block content %}
+<section class="intro" id="top">
+    <div class="intro__copy">
+        <p class="eyebrow"><span class="status-light"></span> 10 ORIGINAL ARCADE GAMES <span class="eyebrow__divider">/</span> PRESS START</p>
+        <h1>THE ARCADE<br>IS <span>YOURS.</span></h1>
+        <p class="intro__description">A whole wall of silly, original games inspired by the golden age of arcades. No cartridges, ROMs, accounts, or downloads. Just pick a cabinet and play.</p>
+        <a class="button button--bright" href="#library">BROWSE THE CABINETS <span>↓</span></a>
+    </div>
+    <div class="intro__cabinet" aria-hidden="true">
+        <div class="cabinet">
+            <div class="cabinet__marquee">INSERT COIN</div>
+            <div class="cabinet__screen">
+                <span class="pixel-star">✦</span>
+                <span class="pixel-alien">👾</span>
+                <span class="pixel-invite">PRESS START</span>
+                <span class="pixel-star pixel-star--two">✦</span>
+            </div>
+            <div class="cabinet__controls"><i></i><i></i><b></b><b></b><b></b></div>
+            <div class="cabinet__base"></div>
+        </div>
+        <span class="intro__sticker">FREE<br>PLAY</span>
+    </div>
+    <div class="intro__ticker" aria-label="Arcade status">
+        <span>NO QUARTERS REQUIRED</span><b>✳</b><span>NO DOWNLOADS</span><b>✳</b><span>ALL GAMES RUN IN YOUR BROWSER</span>
+    </div>
+</section>
+
+<section class="library section-wrap" id="library">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">THE GAME WALL // 001—010</p>
+            <h2>Pick a <span>cabinet.</span></h2>
+        </div>
+        <p class="section-title__note">Ten quick-play arcade homages with original characters, visuals, and rules. Choose any cabinet to start.</p>
+    </div>
+
+    <div class="filters" aria-label="Filter game library">
+        <label class="filter">
+            <span>SEARCH THE WALL</span>
+            <input id="game-search" type="search" placeholder="Game or genre" autocomplete="off">
+        </label>
+        <label class="filter">
+            <span>GENRE</span>
+            <select id="genre-filter"><option value="">All genres</option></select>
+        </label>
+        <label class="filter">
+            <span>ARCADE ERA</span>
+            <select id="year-filter">
+                <option value="">All eras</option>
+                <option value="1970">1970s</option>
+                <option value="1980">1980s</option>
+                <option value="1990">1990s</option>
+            </select>
+        </label>
+        <label class="filter">
+            <span>STATION STYLE</span>
+            <select id="style-filter">
+                <option value="neon">Neon 90s</option>
+                <option value="crt">CRT Glow</option>
+                <option value="arcade">Arcade Classic</option>
+            </select>
+        </label>
+    </div>
+
+    <p class="library-count" id="library-count" aria-live="polite"></p>
+    <div class="game-grid" id="game-grid"></div>
+    <p class="empty-state" id="empty-state" hidden>No cabinets match those filters. Try another genre or era.</p>
+</section>
+
+<section class="player-section section-wrap" id="cabinet">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">PLAYER ONE // READY?</p>
+            <h2 id="selected-title">Choose your <span>game.</span></h2>
+        </div>
+        <p class="section-title__note" id="selected-meta">Select a cabinet above to load its game instantly.</p>
+    </div>
+    <div class="emulator-frame">
+        <div class="emulator-frame__top"><span><i></i> PLAYER SCREEN</span><span id="game-status">INSERT COIN TO START</span></div>
+        <div class="game-screen" id="game-screen">
+            <div class="screen-placeholder">
+                <span class="screen-placeholder__icon">👾</span>
+                <strong>YOUR CABINET IS READY</strong>
+                <span>Choose a game from the wall to play.</span>
+            </div>
+        </div>
+        <div class="game-controls" id="game-controls">
+            <button class="arcade-control" type="button" data-control="ArrowLeft" aria-label="Left">←</button>
+            <button class="arcade-control" type="button" data-control="ArrowDown" aria-label="Down">↓</button>
+            <button class="arcade-control" type="button" data-control="ArrowUp" aria-label="Up">↑</button>
+            <button class="arcade-control" type="button" data-control="ArrowRight" aria-label="Right">→</button>
+            <button class="arcade-control arcade-control--action" type="button" data-control=" " aria-label="Action">A</button>
+        </div>
+        <p class="controls-hint" id="controls-hint">Choose a game to see its controls. Keyboard and on-screen buttons are supported.</p>
+        <div class="emulator-frame__bottom"><span>BUILT-IN BROWSER GAMES</span><span>NO DOWNLOADS <b>●</b> NO ROMS <b>●</b> ALL FUN</span></div>
+    </div>
+</section>
+
+<section class="how-to section-wrap" id="how-to">
+    <p class="eyebrow">THE RULES ARE SIMPLE</p>
+    <div class="steps">
+        <article><span>01</span><h3>Pick a cabinet</h3><p>Filter by genre or the arcade era that inspired each game.</p></article>
+        <article><span>02</span><h3>Press play</h3><p>Each game is an original mini-game built into this site. No files or accounts.</p></article>
+        <article><span>03</span><h3>Chase a high score</h3><p>Use your keyboard or the on-screen controls. Try another cabinet when you're ready.</p></article>
+    </div>
+    <p class="attribution">These are original arcade-inspired games, not ports or copies of the classic games. They use original names, characters, art, and gameplay code.</p>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'main/js/arcade-platform.js' %}" defer></script>
+<script src="{% static 'main/js/arcade-games.js' %}" defer></script>
+{% endblock %}
