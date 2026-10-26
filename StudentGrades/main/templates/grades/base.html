@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>{% block title %}Northstar College | Student portal{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'grades/css/style.css' %}">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="{% url 'student_list' %}">
+                <span class="brand-mark" aria-hidden="true">N</span>
+                <span class="brand-copy">
+                    <strong>Northstar</strong>
+                    <span>COLLEGE PORTAL</span>
+                </span>
+            </a>
+            <nav class="topnav" aria-label="Main navigation">
+                <a class="nav-link nav-link-active" href="{% url 'student_list' %}">Students</a>
+                <span class="term-label"><span class="status-dot"></span> Fall semester</span>
+            </nav>
+            <div class="topbar-user">
+                <span class="avatar avatar-small">NC</span>
+                <span class="user-label">Academic office</span>
+            </div>
+        </header>
+        <main class="page-content">
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="site-footer">
+            <span>Northstar College</span>
+            <span>Learning today. Leading tomorrow.</span>
+        </footer>
+    </div>
+</body>
+</html>

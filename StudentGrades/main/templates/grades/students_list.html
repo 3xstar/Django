@@ -1,0 +1,60 @@
+{% extends "grades/base.html" %}
+{% block title %}Students | Northstar College{% endblock %}
+{% block content %}
+    <section class="welcome-row">
+        <div>
+            <p class="eyebrow">ACADEMIC DIRECTORY <span class="eyebrow-line"></span></p>
+            <h1>Student directory</h1>
+            <p class="page-intro">Get to know the students building what's next.</p>
+        </div>
+        <div class="term-card">
+            <span class="term-card-icon" aria-hidden="true">✦</span>
+            <span><strong>Fall 2026</strong><small>Academic year 2026–27</small></span>
+        </div>
+    </section>
+
+    <section class="stats-row" aria-label="Directory overview">
+        <article class="stat-card">
+            <span class="stat-icon stat-icon-blue" aria-hidden="true">♙</span>
+            <span class="stat-copy"><strong>{{ students|length }}</strong><small>Students enrolled</small></span>
+        </article>
+        <article class="stat-card">
+            <span class="stat-icon stat-icon-gold" aria-hidden="true">✦</span>
+            <span class="stat-copy"><strong>Academic</strong><small>Student success center</small></span>
+        </article>
+        <article class="stat-card stat-card-note">
+            <span class="note-mark" aria-hidden="true">“</span>
+            <span class="stat-copy"><strong>Make it a great semester.</strong><small>Your next chapter starts here.</small></span>
+        </article>
+    </section>
+
+    <section class="directory-section">
+        <div class="section-heading">
+            <div>
+                <h2>All students</h2>
+                <p>Browse student profiles and course grades.</p>
+            </div>
+            <span class="count-pill">{{ students|length }} students</span>
+        </div>
+        <div class="students-list">
+        {% for id, student in students.items %}
+            <div class="student">
+                <div class="student-main">
+                    <span class="avatar">{{ student.name|slice:":1"|upper }}</span>
+                    <div class="student-name">
+                        <h3>{{ student.name }}</h3>
+                        <p>{{ student.group }} <span class="bullet-separator">·</span> Undergraduate</p>
+                    </div>
+                </div>
+                <div class="student-courses">
+                    <span class="course-label">COURSES</span>
+                    {% for course, grade in student.grades.items %}
+                        <span class="course-chip">{{ course }} <strong>{{ grade }}/5</strong></span>
+                    {% endfor %}
+                </div>
+                <a class="detail-link" href="{% url 'student_detail' id %}">View profile <span aria-hidden="true">→</span></a>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+{% endblock %}

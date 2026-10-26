@@ -1,0 +1,40 @@
+{% extends "grades/base.html" %}
+{% block title %}Student profile | Northstar College{% endblock %}
+{% block content %}
+    <a class="back-link" href="{% url 'student_list' %}"><span aria-hidden="true">←</span> Back to directory</a>
+    <section class="profile-hero">
+        <div class="profile-identity">
+            <span class="avatar avatar-large">{{ student.name|slice:":1"|upper }}</span>
+            <div>
+                <p class="eyebrow">STUDENT PROFILE</p>
+                <h1>{{ student.name }}</h1>
+                <p class="page-intro">{{ student.group }} <span class="bullet-separator">·</span> Undergraduate</p>
+            </div>
+        </div>
+        <span class="profile-status"><span class="status-dot"></span> Enrolled</span>
+    </section>
+
+    <section class="directory-section grades-section">
+        <div class="section-heading">
+            <div>
+                <h2>Course grades</h2>
+                <p>Current academic performance</p>
+            </div>
+            <span class="count-pill">Fall 2026</span>
+        </div>
+        <div class="grade-list">
+            {% for course, grade in student.grades.items %}
+                <article class="grade-card">
+                    <span class="grade-course-icon" aria-hidden="true">✦</span>
+                    <div class="grade-course">
+                        <h3>{{ course }}</h3>
+                        <p>Fall semester</p>
+                    </div>
+                    <span class="grade-value">{{ grade }}<small>/ 5</small></span>
+                </article>
+            {% empty %}
+                <p class="empty-state">No course grades have been added yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
