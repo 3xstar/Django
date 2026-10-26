@@ -1,0 +1,99 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fc">
+    <title>{{ selected_day_name }} schedule · Code School</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="{% url 'home' %}" aria-label="Code School home">
+            <span class="brand__mark" aria-hidden="true">&lt;/&gt;</span>
+            <span>Code<span class="brand__light">School</span></span>
+        </a>
+        <span class="school-year">STUDENT PORTAL <span>·</span> 2026—27</span>
+    </header>
+
+    <main class="page">
+        <section class="welcome">
+            <div>
+                <p class="eyebrow"><span class="eyebrow__star">✳</span> YOUR WEEK, AT A GLANCE</p>
+                <h1>Class schedule<span>.</span></h1>
+                <p class="welcome__copy">A little structure. A lot of things to build.</p>
+            </div>
+            <div class="welcome__note" aria-label="School motto">
+                <span class="welcome__note-icon">✦</span>
+                <span>SHOW UP<br>AND MAKE<br>SOMETHING.</span>
+            </div>
+        </section>
+
+        <nav class="day-picker" aria-label="Choose a day">
+            {% for day in days %}
+                <a class="day-tab{% if day.slug == selected_day %} day-tab--selected{% endif %}"
+                   href="?day={{ day.slug }}"
+                   {% if day.slug == selected_day %}aria-current="page"{% endif %}>
+                    <span class="day-tab__name">{{ day.name|slice:":3" }}</span>
+                    {% if day.is_today %}<span class="day-tab__today">TODAY</span>{% endif %}
+                </a>
+            {% endfor %}
+        </nav>
+
+        <section class="schedule" aria-labelledby="schedule-title">
+            <div class="schedule__heading">
+                <div>
+                    <p class="eyebrow">WEEKDAY TIMETABLE</p>
+                    <h2 id="schedule-title">{{ selected_day_name }}<span class="heading-period">.</span></h2>
+                </div>
+                <span class="class-count">
+                    <span class="class-count__dot"></span>
+                    {{ class_count }} {% if class_count == 1 %}class{% else %}classes{% endif %}
+                </span>
+            </div>
+
+            {% if classes %}
+                <div class="class-list">
+                    {% for start, end, title, description, room, subject in classes %}
+                        <article class="class-card">
+                            <div class="class-card__time">
+                                <time>{{ start }}</time>
+                                <span>{{ end }}</span>
+                            </div>
+                            <span class="class-card__rule" aria-hidden="true"></span>
+                            <div class="class-card__details">
+                                <span class="class-card__subject">{{ subject }}</span>
+                                <h3>{{ title }}</h3>
+                                <p>{{ description }}</p>
+                            </div>
+                            <span class="class-card__room"><span aria-hidden="true">⌖</span> {{ room }}</span>
+                            <span class="class-card__arrow" aria-hidden="true">↗</span>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="weekend-card">
+                    <span class="weekend-card__icon" aria-hidden="true">☼</span>
+                    <div>
+                        <h3>No classes today.</h3>
+                        <p>Take a break, recharge, and come back ready to build.</p>
+                    </div>
+                    <a href="?day=monday">See Monday’s schedule <span aria-hidden="true">→</span></a>
+                </div>
+            {% endif %}
+        </section>
+
+        <aside class="tip">
+            <span class="tip__icon" aria-hidden="true">✦</span>
+            <p><strong>A little reminder</strong> Bring your laptop, a curious mind, and questions. You belong here.</p>
+            <span class="tip__label">YOU’VE GOT THIS</span>
+        </aside>
+    </main>
+
+    <footer class="footer">
+        <span>CODE SCHOOL <span class="footer__dot">✳</span> LEARN BY MAKING</span>
+        <span>ONE LINE AT A TIME.</span>
+    </footer>
+</body>
+</html>
