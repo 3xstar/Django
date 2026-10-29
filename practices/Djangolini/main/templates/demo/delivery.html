@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17232e">
+    <title>Djangolini — доставка без забот</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="{% url 'delivery' %}"><span class="brand-mark">d</span>Djangolini</a>
+        <span class="top-note">Доставка с заботой о вас</span>
+    </header>
+
+    <main class="layout">
+        <section class="intro">
+            <p class="eyebrow">ЛЕГКО ОТПРАВИТЬ</p>
+            <h1>Пусть хорошее<br>доедет быстро.</h1>
+            <p class="intro-copy">Рассчитайте стоимость доставки за минуту. Бережно доставим в любой город.</p>
+            <div class="trust-note"><span>✦</span> Просто. Прозрачно. Надёжно.</div>
+        </section>
+
+        <section class="card">
+            <div class="card-heading">
+                <div>
+                    <p class="eyebrow">РАСЧЁТ ДОСТАВКИ</p>
+                    <h2>Детали отправления</h2>
+                </div>
+                <span class="step-badge">01</span>
+            </div>
+
+            {% if result %}
+                <section class="result" aria-live="polite">
+                    <p class="eyebrow">ВАША СТОИМОСТЬ</p>
+                    <strong class="total">{{ result.total|floatformat:2 }} ₽</strong>
+                    <p class="route">{{ result.origin_city }} <span>→</span> {{ result.destination_city }}</p>
+                    <div class="price-lines">
+                        <span>Доставка</span><span>{{ result.shipping|floatformat:2 }} ₽</span>
+                        {% if result.insurance %}<span>Страховка</span><span>{{ result.insurance|floatformat:2 }} ₽</span>{% endif %}
+                        {% if result.discount %}<span>Скидка по промокоду</span><span>−{{ result.discount|floatformat:2 }} ₽</span>{% endif %}
+                    </div>
+                </section>
+            {% endif %}
+
+            <form method="post" class="delivery-form" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-errors">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="fields">
+                    {% for field in form %}
+                        <div class="field{% if field.errors %} field-invalid{% endif %}{% if field.name == 'terms' or field.name == 'insured' %} field-check{% endif %}">
+                            {% if field.name == "terms" or field.name == "insured" %}
+                                <label class="check-row">{{ field }}<span>{{ field.label }}</span></label>
+                            {% else %}
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.help_text %}<span class="help-text">{{ field.help_text }}</span>{% endif %}
+                            {% endif %}
+                            {% for error in field.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="submit-button" type="submit">Рассчитать доставку <span>→</span></button>
+                <p class="secure-note">Нажимая кнопку, вы подтверждаете согласие с условиями доставки.</p>
+            </form>
+        </section>
+
+        {% if history %}
+            <section class="history">
+                <div class="history-heading"><p class="eyebrow">ВАШИ ПОСЛЕДНИЕ РАСЧЁТЫ</p><span>До 5 записей</span></div>
+                {% for order in history %}
+                    <div class="history-row">
+                        <div><strong>{{ order.origin_city }} <span>→</span> {{ order.destination_city }}</strong><small>{{ order.weight }} кг · {{ order.created_at|date:"d.m.Y H:i" }}</small></div>
+                        <strong>{{ order.price|floatformat:2 }} ₽</strong>
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+    </main>
+    <footer>С любовью к маршрутам и людям <span>✦</span></footer>
+</body>
+</html>

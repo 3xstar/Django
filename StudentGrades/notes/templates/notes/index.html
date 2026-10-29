@@ -1,0 +1,22 @@
+{% extends 'notes/base.html' %}
+
+{% block content %}
+    <h1>Заметки</h1>
+    <ol>
+        {% for id, note in notes.items %}
+            <li>
+                <h3>{{ note }}</h3>
+            </li>
+        {% empty %}
+            <li>Нет заметок.</li>
+        {% endfor %}
+    </ol>
+
+    <form method="post">
+        {% csrf_token %}
+        <label>
+            <input type="text" name="note" placeholder="Введите заметку">
+        </label>
+        <button type="submit">Добавить</button>
+    </form>
+{% endblock %}
