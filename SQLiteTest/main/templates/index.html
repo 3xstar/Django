@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+<nav>
+    <a href="{% url 'main:index' %}">Главная</a>
+    <a href="{% url 'main:add_task' %}">Добавить задачу</a>
+</nav>
+<h1>Задачи</h1>
+<ul>
+    {% for task in tasks %}
+        <li>
+            {{ task.title }}
+            <h4> Status -
+                {% if task.status %}
+                    ✅
+                {% else %}
+                    ❌
+                {% endif %}
+            </h4>
+            <a href="{% url 'main:delete_task' task.id %}">Удалить</a>
+            <a href="{% url 'main:update_task' task.id %}">Изменить</a>
+        </li>
+    {% empty %}
+        <li>Задач пока нет.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

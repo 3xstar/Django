@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Изменение задачи{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field.label_tag }}
+            {{ field }}
+        {% endfor %}
+        <button type="submit">Сохранить</button>
+    </form>
+{% endblock %}
