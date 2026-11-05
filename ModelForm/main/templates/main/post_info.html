@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>Автор: {{ post.author }}</p>
+    <p>Дата публикации: {{ post.created_at }}</p>
+    <p>{{ post.content }}</p>
+
+    <section>
+        <h2>Комментарии</h2>
+        {% for comment in comments %}
+            <article>
+                <p>{{ comment.content|linebreaks }}</p>
+                <p>Автор: {{ comment.author }}</p>
+                <p>Дата публикации: {{ comment.created_at }}</p>
+            </article>
+        {% empty %}
+            <p>Пока нет комментариев.</p>
+        {% endfor %}
+
+        <details>
+            <summary>Написать комментарий</summary>
+            <form method="post">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit">Отправить</button>
+            </form>
+        </details>
+    </section>
+
+    <div class="actions">
+        <a href="{% url 'main:post_delete' post_id=post.id %}">Удалить пост</a>
+    </div>
+{% endblock %}
