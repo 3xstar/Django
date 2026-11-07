@@ -1,0 +1,51 @@
+{% extends "main.html" %}
+
+{% block title %}LittleLibrary — список книг{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="castle-scene" aria-hidden="true">
+        <div class="castle-spires"><i></i><i></i><i></i></div>
+        <div class="castle-window"></div>
+        <div class="castle-stairs"></div>
+        <div class="castle-carpet"></div>
+        <div class="castle-lights"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="hero-content">
+        <p class="eyebrow">Ваша личная библиотека</p>
+        <h1>LittleLibrary</h1>
+        <p class="hero-copy">Соберите свою коллекцию и храните любимые истории.</p>
+        <a class="button button-primary hero-button" href="{% url 'main:book_create' %}">Добавить книгу <span aria-hidden="true">＋</span></a>
+    </div>
+</section>
+
+<section class="collection" aria-labelledby="collection-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Ваша коллекция</p>
+            <h2 id="collection-title">Список книг</h2>
+        </div>
+        <span class="book-count">{{ books|length }} <span>изданий</span></span>
+    </div>
+
+    {% if books %}
+        <div class="book-grid">
+            {% for book in books %}
+                <article class="book-card">
+                    <span class="book-number">{% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}</span>
+                    <h3>{{ book.title }}</h3>
+                    <p class="book-author">{{ book.author.name }}</p>
+                    <p class="book-year">Год издания <span>{{ book.year }}</span></p>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <span class="empty-ornament" aria-hidden="true">✧</span>
+            <h3>Пока нет книг</h3>
+            <p>Добавьте первую книгу в свою коллекцию.</p>
+            <a class="button button-secondary" href="{% url 'main:book_create' %}">Добавить первую книгу <span aria-hidden="true">＋</span></a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

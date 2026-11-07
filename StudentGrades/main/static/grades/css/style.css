@@ -183,6 +183,10 @@ a {
     padding: 58px 0 68px;
 }
 
+.auth-form .errorlist {
+    display: none;
+}
+
 .welcome-row,
 .section-heading {
     justify-content: space-between;
