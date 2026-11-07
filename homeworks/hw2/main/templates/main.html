@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LittleLibrary{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{% url 'main:index' %}">
+            <span class="brand-mark" aria-hidden="true">✦</span>
+            <span>LittleLibrary</span>
+        </a>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <a href="{% url 'main:index' %}">Книги</a>
+            <a class="nav-cta" href="{% url 'main:book_create' %}">Добавить книгу <span aria-hidden="true">＋</span></a>
+        </nav>
+    </header>
+    <main class="page-content">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">LittleLibrary <span aria-hidden="true">·</span> Ваша коллекция книг</footer>
+</body>
+</html>
