@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}DjangoFilms{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=3">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="{% url 'movie_list' %}">
+                <span class="brand-mark" aria-hidden="true">DF</span>
+                <span class="site-title">DjangoFilms</span>
+            </a>
+            <nav class="site-nav" aria-label="Основная навигация">
+                <a href="{% url 'movie_list' %}">Каталог</a>
+                <a class="nav-cta" href="{% url 'add_movie' %}">Добавить фильм</a>
+                <a href="{% url 'add_director' %}">Режиссёр</a>
+                <a href="{% url 'add_genre' %}">Жанр</a>
+            </nav>
+        </header>
+        <main>
+            {% for message in messages %}
+                <p class="message" role="status">{{ message }}</p>
+            {% endfor %}
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="site-footer">
+            <span>Фильмы. Режиссёры. Истории.</span>
+            <span class="footer-mark">DJANGOFILMS · 2026</span>
+        </footer>
+    </div>
+</body>
+</html>

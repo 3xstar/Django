@@ -1,0 +1,24 @@
+{% extends "grades/base.html" %}
+{% block content %}
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    {% if form.errors %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                {% for field in form %}
+                    {% if field.errors %}
+                        const field{{ forloop.counter }} = document.getElementById("{{ field.id_for_label }}");
+                        field{{ forloop.counter }}.setCustomValidity("{{ field.errors.0|escapejs }}");
+                        field{{ forloop.counter }}.reportValidity();
+                        field{{ forloop.counter }}.addEventListener("input", function () {
+                            this.setCustomValidity("");
+                        });
+                    {% endif %}
+                {% endfor %}
+            });
+        </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "grades/base.html" %}
+{% block content %}
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Войти</button>
+    </form>
+    {% if form.non_field_errors %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const loginField = document.getElementById("id_login");
+                loginField.setCustomValidity("{{ form.non_field_errors.0|escapejs }}");
+                loginField.reportValidity();
+                loginField.addEventListener("input", function () {
+                    this.setCustomValidity("");
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+
+{% block title %}{{ title }} — DjangoFilms{% endblock %}
+
+{% block content %}
+    <section class="panel form-panel">
+        <h2>{{ title }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Сохранить</button>
+        </form>
+    </section>
+{% endblock %}

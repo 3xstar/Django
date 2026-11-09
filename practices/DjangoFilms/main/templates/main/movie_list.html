@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+
+{% block title %}Фильмы — DjangoFilms{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="eyebrow">Каталог DjangoFilms</span>
+            <h2>Ваш мир кино.<br>В одной коллекции.</h2>
+            <p>Открывайте фильмы, знакомьтесь с режиссёрами и находите истории для следующего просмотра.</p>
+        </div>
+        <span class="hero-note">Выберите фильм.<br>Погрузитесь в историю.</span>
+    </section>
+
+    <section class="catalog-panel">
+        <div class="section-heading">
+            <h2>Каталог фильмов</h2>
+            <span class="section-kicker">Выберите свой следующий сеанс</span>
+        </div>
+        <form class="filter-form" method="get">
+            <div class="filter-field">
+                <label for="q">Название</label>
+                <input id="q" type="search" name="q" value="{{ search_query }}">
+            </div>
+
+            <div class="filter-field">
+                <label for="genre">Жанр</label>
+                <select id="genre" name="genre">
+                    <option value="">Все жанры</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre.id }}" {% if selected_genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                            {{ genre.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-field">
+                <label for="director">Режиссёр</label>
+                <select id="director" name="director">
+                    <option value="">Все режиссёры</option>
+                    {% for director in directors %}
+                        <option value="{{ director.id }}" {% if selected_director == director.id|stringformat:"s" %}selected{% endif %}>
+                            {{ director.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-field">
+                <label for="sort">Сортировка</label>
+                <select id="sort" name="sort">
+                    <option value="title" {% if selected_sort == "title" %}selected{% endif %}>По названию</option>
+                    <option value="-year" {% if selected_sort == "-year" %}selected{% endif %}>Сначала новые</option>
+                    <option value="year" {% if selected_sort == "year" %}selected{% endif %}>Сначала старые</option>
+                    <option value="-rating" {% if selected_sort == "-rating" %}selected{% endif %}>По рейтингу</option>
+                    <option value="duration" {% if selected_sort == "duration" %}selected{% endif %}>По длительности</option>
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit">Применить</button>
+                <a class="reset-link" href="{% url 'movie_list' %}">Сбросить</a>
+            </div>
+        </form>
+
+        {% if movies %}
+            <ul class="movie-list">
+                {% for movie in movies %}
+                    <li class="movie-card" style="animation-delay: {{ forloop.counter0 }}0ms">
+                        <span class="movie-title">{{ movie.title }} ({{ movie.year }}) — {{ movie.director.name }}</span>
+                        <span class="movie-details">{{ movie.genre.name }} · Рейтинг {{ movie.rating }} · {{ movie.duration_minutes }} мин.</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-state">Фильмы не найдены. Добавьте фильм или измените параметры поиска.</p>
+        {% endif %}
+    </section>
+{% endblock %}
