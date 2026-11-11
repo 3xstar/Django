@@ -1,60 +1,67 @@
 {% extends "grades/base.html" %}
-{% block title %}Students | Northstar College{% endblock %}
+{% block title %}Student hub · Northstar College{% endblock %}
 {% block content %}
-    <section class="welcome-row">
+    <section class="hub-heading">
         <div>
-            <p class="eyebrow">ACADEMIC DIRECTORY <span class="eyebrow-line"></span></p>
-            <h1>Student directory</h1>
-            <p class="page-intro">Get to know the students building what's next.</p>
+            <p class="eyebrow"><span class="eyebrow-dot"></span> NORTHSTAR COMMUNITY</p>
+            <h1>Your student hub.</h1>
+            <p class="page-intro">Meet your classmates and keep the good work going.</p>
         </div>
-        <div class="term-card">
-            <span class="term-card-icon" aria-hidden="true">✦</span>
-            <span><strong>Fall 2026</strong><small>Academic year 2026–27</small></span>
-        </div>
+        <a class="hub-profile-link" href="{% url 'main' %}">
+            <span class="hub-profile-avatar">{{ request.user.name|default:request.user.username|slice:":1"|upper }}</span>
+            <span><small>YOUR ACCOUNT</small><strong>Open my profile</strong></span>
+            <span class="hub-profile-arrow" aria-hidden="true">↗</span>
+        </a>
     </section>
 
-    <section class="stats-row" aria-label="Directory overview">
-        <article class="stat-card">
-            <span class="stat-icon stat-icon-blue" aria-hidden="true">♙</span>
-            <span class="stat-copy"><strong>{{ students|length }}</strong><small>Students enrolled</small></span>
-        </article>
-        <article class="stat-card">
-            <span class="stat-icon stat-icon-gold" aria-hidden="true">✦</span>
-            <span class="stat-copy"><strong>Academic</strong><small>Student success center</small></span>
-        </article>
-        <article class="stat-card stat-card-note">
-            <span class="note-mark" aria-hidden="true">“</span>
-            <span class="stat-copy"><strong>Make it a great semester.</strong><small>Your next chapter starts here.</small></span>
-        </article>
+    <section class="hub-banner">
+        <div>
+            <p class="eyebrow">A LITTLE PROGRESS, EVERY DAY</p>
+            <h2>Find your people.<br>Celebrate the progress.</h2>
+            <p>Browse the student community and see the latest grades.</p>
+        </div>
+        <span class="hub-banner-art" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="hub-banner-caption" aria-hidden="true">NORTHSTAR&nbsp; / &nbsp;STUDENT LIFE</span>
     </section>
 
-    <section class="directory-section">
+    <section class="hub-list-section">
         <div class="section-heading">
-            <div>
-                <h2>All students</h2>
-                <p>Browse student profiles and course grades.</p>
+            <div class="section-title">
+                <p class="eyebrow">THE COMMUNITY</p>
+                <h2>Students</h2>
+                <p>Everyone on the student portal, all in one place.</p>
             </div>
-            <span class="count-pill">{{ students|length }} students</span>
+            <span class="count-pill">{{ students|length }} <span>students</span></span>
         </div>
-        <div class="students-list">
-        {% for id, student in students.items %}
-            <div class="student">
-                <div class="student-main">
-                    <span class="avatar">{{ student.name|slice:":1"|upper }}</span>
-                    <div class="student-name">
-                        <h3>{{ student.name }}</h3>
-                        <p>{{ student.group }} <span class="bullet-separator">·</span> Undergraduate</p>
+        <div class="hub-student-list">
+            {% for student in students %}
+                <article class="hub-student">
+                    <span class="avatar">{{ student.name|default:student.username|slice:":1"|upper }}</span>
+                    <div class="hub-student-name">
+                        <h3>{{ student.name|default:student.username }}</h3>
+                        <p>@{{ student.username }}{% if student == request.user %}<span class="you-tag">YOU</span>{% endif %}</p>
                     </div>
+                    <div class="hub-student-grades">
+                        <span class="course-label">RECENT GRADES</span>
+                        {% for grade in student.grade_set.all %}
+                            <span class="course-chip"><span>{{ grade.subject }}</span><strong>{{ grade.grade|floatformat:"-1" }}<small>/5</small></strong></span>
+                        {% empty %}
+                            <span class="course-empty">No grades recorded</span>
+                        {% endfor %}
+                    </div>
+                    {% if student == request.user %}
+                        <a class="detail-link" href="{% url 'main' %}" aria-label="Open your profile">↗</a>
+                    {% else %}
+                        <span class="detail-link detail-link-muted" aria-hidden="true">· · ·</span>
+                    {% endif %}
+                </article>
+            {% empty %}
+                <div class="empty-state">
+                    <span aria-hidden="true">✳</span>
+                    <strong>No students yet</strong>
+                    <p>Student accounts will appear here when they join the portal.</p>
                 </div>
-                <div class="student-courses">
-                    <span class="course-label">COURSES</span>
-                    {% for course, grade in student.grades.items %}
-                        <span class="course-chip">{{ course }} <strong>{{ grade }}/5</strong></span>
-                    {% endfor %}
-                </div>
-                <a class="detail-link" href="{% url 'student_detail' id %}">View profile <span aria-hidden="true">→</span></a>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

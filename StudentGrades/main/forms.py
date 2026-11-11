@@ -1,22 +1,20 @@
 from django import forms
 from .models import Student, Grade
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-class RegistrationForm(forms.ModelForm):
-    class Meta:
+
+class RegistrationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
         model = Student
-        fields = ['name', 'date', 'login', 'password']
+        fields = ['name', 'username', 'date', 'password1', 'password2']
         widgets = {
-            'password': forms.PasswordInput(),
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
 
-class LoginForm(forms.ModelForm):
+class LoginForm(AuthenticationForm):
     class Meta:
         model = Student
-        fields = ['login', 'password']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
+        fields = ['username']
 
 class GradeForm(forms.ModelForm):
     class Meta:

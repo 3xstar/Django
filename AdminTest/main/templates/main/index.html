@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+    <h1>Task List</h1>
+
+    {% if tasks %}
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {% if task.completed %}
+                        <span style="text-decoration: line-through;">{{ task.title }}</span>
+                        <span class="badge completed">Completed</span>
+                    {% else %}
+                        <span>{{ task.title }}</span>
+                        <span class="badge pending">Pending</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tasks available.</p>
+    {% endif %}
+{% endblock %}

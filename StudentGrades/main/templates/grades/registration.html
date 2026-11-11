@@ -1,24 +1,41 @@
 {% extends "grades/base.html" %}
+{% block title %}Create your account · Northstar College{% endblock %}
 {% block content %}
-    <form method="post" class="auth-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Зарегистрироваться</button>
-    </form>
-    {% if form.errors %}
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                {% for field in form %}
-                    {% if field.errors %}
-                        const field{{ forloop.counter }} = document.getElementById("{{ field.id_for_label }}");
-                        field{{ forloop.counter }}.setCustomValidity("{{ field.errors.0|escapejs }}");
-                        field{{ forloop.counter }}.reportValidity();
-                        field{{ forloop.counter }}.addEventListener("input", function () {
-                            this.setCustomValidity("");
-                        });
-                    {% endif %}
-                {% endfor %}
-            });
-        </script>
-    {% endif %}
+    <section class="auth-layout auth-layout-registration">
+        <div class="auth-aside">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> NORTHSTAR COLLEGE</p>
+            <h1>Start where<br>you are.</h1>
+            <p class="auth-lede">A student portal built around your work, your growth, and everything ahead.</p>
+            <div class="signup-steps" aria-label="Three steps to join">
+                <p class="signup-steps-title">THREE STEPS TO YOUR PORTAL</p>
+                <div class="signup-step signup-step-current"><span>01</span><i></i><strong>Create your account</strong></div>
+                <div class="signup-step"><span>02</span><i></i><strong>Meet your community</strong></div>
+                <div class="signup-step"><span>03</span><i></i><strong>Follow your progress</strong></div>
+            </div>
+            <p class="auth-aside-foot"><span class="status-dot"></span> One account. A fresh start.</p>
+        </div>
+        <div class="auth-card">
+            <p class="eyebrow">GET STARTED</p>
+            <h2>Create your account</h2>
+            <p class="auth-description">A few details and you’re in.</p>
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="form-grid">
+                    {% for field in form %}
+                        <div class="form-field{% if field.errors %} form-field-invalid{% endif %}{% if field.name == 'password1' or field.name == 'password2' %} form-field-wide{% endif %}">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}<div class="field-help">{{ field.help_text|safe }}</div>{% endif %}
+                            {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Зарегистрироваться <span aria-hidden="true">→</span></button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="{% url 'login' %}">Sign in <span aria-hidden="true">↗</span></a></p>
+        </div>
+    </section>
 {% endblock %}

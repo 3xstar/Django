@@ -1,0 +1,88 @@
+{% extends "grades/base.html" %}
+{% block title %}My profile · Northstar College{% endblock %}
+{% block content %}
+    <section class="profile-page-heading">
+        <div>
+            <p class="eyebrow"><span class="eyebrow-dot"></span> ЛИЧНЫЙ КАБИНЕТ</p>
+            <h1>Мой профиль</h1>
+            <p class="page-intro">Ваша информация и успеваемость в одном месте.</p>
+        </div>
+        <a class="profile-hub-link" href="{% url 'student_list' %}"><span aria-hidden="true">←</span> Вернуться в хаб</a>
+    </section>
+
+    <section class="profile-overview">
+        <div class="profile-identity-card">
+            <div class="profile-avatar">{{ request.user.name|default:request.user.username|slice:":1"|upper }}</div>
+            <div class="profile-person">
+                <p class="eyebrow">СТУДЕНТ</p>
+                <h2>{{ request.user.name|default:request.user.username }}</h2>
+                <p>@{{ request.user.username }}</p>
+            </div>
+            <span class="profile-active"><span class="status-dot"></span> Аккаунт активен</span>
+        </div>
+        <div class="profile-stat-grid">
+            <article class="profile-stat">
+                <span class="profile-stat-icon" aria-hidden="true">✳</span>
+                <span><small>ПРЕДМЕТОВ</small><strong>{{ grade_count }}</strong></span>
+            </article>
+            <article class="profile-stat">
+                <span class="profile-stat-icon profile-stat-icon-coral" aria-hidden="true">↗</span>
+                <span><small>СРЕДНИЙ БАЛЛ</small><strong>{% if grade_average is not None %}{{ grade_average }}{% else %}—{% endif %}<small class="grade-scale">/ 5</small></strong></span>
+            </article>
+        </div>
+    </section>
+
+    <section class="grade-constellation" aria-label="Grade overview">
+        <div class="constellation-heading">
+            <span class="constellation-icon" aria-hidden="true">✦</span>
+            <div>
+                <p class="eyebrow">YOUR SEMESTER, IN MOTION</p>
+                <h2>Every mark tells a story.</h2>
+            </div>
+            <span class="constellation-total">{{ grade_count }} subjects</span>
+        </div>
+        {% if grades %}
+            <div class="grade-bars">
+                {% for grade in grades %}
+                    <div class="grade-bar-item">
+                        <div class="grade-bar-label"><span>{{ grade.subject }}</span><strong>{{ grade.grade|floatformat:"-1" }}</strong></div>
+                        <div class="grade-bar-track"><span style="--grade-width: {% widthratio grade.grade 5 100 %}%"></span></div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="constellation-empty">Your grade chart will appear here when your first mark arrives.</p>
+        {% endif %}
+        <span class="constellation-orbit constellation-orbit-one" aria-hidden="true"></span>
+        <span class="constellation-orbit constellation-orbit-two" aria-hidden="true"></span>
+    </section>
+
+    <section class="directory-section profile-grades-section">
+        <div class="section-heading">
+            <div class="section-title">
+                <p class="eyebrow">ВАШИ РЕЗУЛЬТАТЫ</p>
+                <h2>Мои оценки</h2>
+                <p>Оценки по вашим предметам.</p>
+            </div>
+            <span class="count-pill">{{ grade_count }} <span>предм.</span></span>
+        </div>
+        <div class="profile-grade-list">
+            {% for grade in grades %}
+                <article class="profile-grade">
+                    <span class="profile-grade-mark" aria-hidden="true">✳</span>
+                    <div class="profile-grade-subject">
+                        <h3>{{ grade.subject }}</h3>
+                        <p>Текущий результат</p>
+                    </div>
+                    <strong class="profile-grade-value">{{ grade.grade|floatformat:"-1" }}<small>/ 5</small></strong>
+                </article>
+            {% empty %}
+                <div class="empty-state">
+                    <span aria-hidden="true">✳</span>
+                    <strong>Оценок пока нет</strong>
+                    <p>Когда преподаватель добавит оценки, они появятся здесь.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

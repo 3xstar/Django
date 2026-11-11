@@ -1,20 +1,45 @@
 {% extends "grades/base.html" %}
+{% block title %}Sign in · Northstar College{% endblock %}
 {% block content %}
-    <form method="post" class="auth-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Войти</button>
-    </form>
-    {% if form.non_field_errors %}
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const loginField = document.getElementById("id_login");
-                loginField.setCustomValidity("{{ form.non_field_errors.0|escapejs }}");
-                loginField.reportValidity();
-                loginField.addEventListener("input", function () {
-                    this.setCustomValidity("");
-                });
-            });
-        </script>
-    {% endif %}
+    <section class="auth-layout auth-login">
+        <div class="auth-aside">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> NORTHSTAR COLLEGE</p>
+            <h1>Make room<br>for what’s next.</h1>
+            <p class="auth-lede">Your courses, your people, your progress — all in one place.</p>
+            <div class="auth-art" aria-hidden="true">
+                <span class="art-orbit"></span>
+                <span class="art-sun"></span>
+                <span class="art-book art-book-back"></span>
+                <span class="art-book art-book-front"><i></i><i></i><i></i></span>
+                <span class="art-caption">YOUR NEXT CHAPTER</span>
+            </div>
+            <div class="login-seal" aria-hidden="true">
+                <span class="login-seal-mark">N</span>
+                <span class="login-seal-copy"><strong>THE NORTHSTAR PORTAL</strong><small>YOUR ACADEMIC HOME</small></span>
+                <span class="login-seal-star">✦</span>
+            </div>
+            <p class="auth-aside-foot"><span class="status-dot"></span> A good place to begin again.</p>
+        </div>
+        <div class="auth-card">
+            <p class="eyebrow">WELCOME BACK</p>
+            <h2>Sign in</h2>
+            <p class="auth-description">Use your student account to continue.</p>
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+                {% endif %}
+                {% for field in form %}
+                    <div class="form-field{% if field.errors %} form-field-invalid{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                    </div>
+                {% endfor %}
+                <button type="submit">Войти <span aria-hidden="true">→</span></button>
+            </form>
+            <p class="auth-switch">New around here? <a href="{% url 'registration' %}">Create an account <span aria-hidden="true">↗</span></a></p>
+            <p class="auth-privacy">Your account is private and secure.</p>
+        </div>
+    </section>
 {% endblock %}

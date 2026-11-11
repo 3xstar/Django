@@ -1,12 +1,9 @@
-from typing import cast
-
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-class Student(models.Model):
+class Student(AbstractUser):
     name = models.CharField(max_length=200)
     date = models.DateField()
-    login = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
 
 class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

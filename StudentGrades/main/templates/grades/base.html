@@ -4,36 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f5f7fb">
+    <meta name="theme-color" content="#090f17">
     <title>{% block title %}Northstar College | Student portal{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'grades/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'grades/css/style.css' %}?v=20261111-8">
+    <script src="{% static 'grades/js/site-effects.js' %}?v=20261111-1" defer></script>
 </head>
 <body>
     <div class="app-shell">
         <header class="topbar">
-            <a class="brand" href="{% url 'student_list' %}">
-                <span class="brand-mark" aria-hidden="true">N</span>
+            <a class="brand" href="{% url 'main' %}">
+                <span class="brand-mark" aria-hidden="true">n.</span>
                 <span class="brand-copy">
-                    <strong>Northstar</strong>
-                    <span>COLLEGE PORTAL</span>
+                    <strong>northstar</strong>
+                    <span>STUDENT PORTAL</span>
                 </span>
             </a>
             <nav class="topnav" aria-label="Main navigation">
-                <a class="nav-link nav-link-active" href="{% url 'student_list' %}">Students</a>
-                <span class="term-label"><span class="status-dot"></span> Fall semester</span>
+                {% if request.user.is_authenticated %}
+                    <a class="nav-link {% if request.resolver_match.url_name == 'student_list' %}nav-link-active{% endif %}" href="{% url 'student_list' %}">Student hub</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'main' %}nav-link-active{% endif %}" href="{% url 'main' %}">My profile</a>
+                    <span class="term-label"><span class="status-dot"></span> Fall semester</span>
+                {% else %}
+                    <a class="nav-link {% if request.resolver_match.url_name == 'login' %}nav-link-active{% endif %}" href="{% url 'login' %}">Sign in</a>
+                    <a class="nav-cta" href="{% url 'registration' %}">Create account <span aria-hidden="true">↗</span></a>
+                {% endif %}
             </nav>
-            <div class="topbar-user">
-                <span class="avatar avatar-small">NC</span>
-                <span class="user-label">Academic office</span>
-            </div>
+            {% if request.user.is_authenticated %}
+                <div class="topbar-user">
+                    <span class="avatar avatar-small">{{ request.user.username|slice:":1"|upper }}</span>
+                    <span class="user-label">{{ request.user.username }}</span>
+                </div>
+            {% endif %}
         </header>
         <main class="page-content">
             {% block content %}{% endblock %}
         </main>
         <footer class="site-footer">
-            <span>Northstar College</span>
-            <span>Learning today. Leading tomorrow.</span>
+            <span>© 2026 Northstar College</span>
+            <span>Made for the next step.</span>
         </footer>
     </div>
+    <div class="music-effects" id="musicEffects" aria-hidden="true"></div>
+    <aside class="site-audio-player" id="siteAudioPlayer" aria-label="Local music player">
+        <audio id="siteAudio" preload="none"></audio>
+        <span class="audio-disc" aria-hidden="true"><span>♪</span></span>
+        <div class="audio-track-info">
+            <strong>Midnight study</strong>
+            <span id="audioTrackName">Choose a track from your device</span>
+            <span class="audio-status" id="audioStatus" role="status">Audio stays on this device.</span>
+        </div>
+        <input id="audioFileInput" class="visually-hidden" type="file" accept="audio/*">
+        <button class="audio-select-button" id="audioSelectButton" type="button">Choose track</button>
+        <button class="audio-toggle-button" id="audioToggleButton" type="button" aria-label="Play selected track" disabled>
+            <span id="audioToggleIcon" aria-hidden="true">▶</span>
+        </button>
+    </aside>
 </body>
 </html>
