@@ -1,0 +1,43 @@
+{% extends "main/base.html" %}
+
+{% block title %}Каталог товаров{% endblock %}
+
+{% block content %}
+<section class="catalog-panel">
+    <div class="catalog-heading">
+        <div>
+            <p class="eyebrow">КАТАЛОГ</p>
+            <h1>Товары</h1>
+            <p class="subtitle">Всё, что сейчас есть в наличии.</p>
+        </div>
+        <span class="product-count">{{ products|length }} товаров</span>
+    </div>
+    {% if products %}
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+            <div class="product-card-top">
+                <span class="category-pill">{{ product.category }}</span>
+                <span class="stock {% if product.count > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+                    {% if product.count > 0 %}В наличии{% else %}Нет в наличии{% endif %}
+                </span>
+            </div>
+            <h2>{{ product.name }}</h2>
+            <p class="product-art">Артикул {{ product.art }}</p>
+            <div class="product-card-bottom">
+                <strong class="product-price">{{ product.price }} <span>₽</span></strong>
+                <span class="product-quantity">Количество: {{ product.count }}</span>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <span class="empty-icon" aria-hidden="true">◇</span>
+        <h2>Пока нет товаров</h2>
+        <p>Добавьте товары через админ-панель — они появятся здесь.</p>
+        <a class="empty-admin-link" href="{% url 'admin:index' %}">Открыть админ-панель</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

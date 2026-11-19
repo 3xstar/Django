@@ -1,0 +1,495 @@
+:root {
+    color-scheme: light;
+    --admin-bg: #eef3f8;
+    --admin-surface: rgb(255 255 255 / 76%);
+    --admin-sidebar: rgb(242 246 251 / 72%);
+    --admin-text: #172033;
+    --admin-muted: #64748b;
+    --admin-border: rgb(255 255 255 / 82%);
+    --admin-accent: #2867e8;
+    --admin-accent-hover: #174fc3;
+    --admin-radius: 16px;
+    --admin-shadow: 0 12px 34px rgb(58 76 112 / 10%);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 12% 8%, rgb(175 217 255 / 70%), transparent 34rem),
+        radial-gradient(ellipse at 88% 30%, rgb(218 204 255 / 68%), transparent 32rem),
+        linear-gradient(145deg, #f8fbff 0%, #edf3fa 55%, #f8f6ff 100%);
+    background-attachment: fixed;
+    color: var(--admin-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+a:link,
+a:visited {
+    color: var(--admin-accent);
+}
+
+a:hover {
+    color: var(--admin-accent-hover);
+}
+
+#container {
+    min-height: 100vh;
+    background: transparent;
+}
+
+#main {
+    min-width: 0;
+}
+
+#nav-sidebar {
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    padding: 18px 12px;
+    overflow-y: auto;
+    border-right: 1px solid var(--admin-border);
+    background: var(--admin-sidebar);
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+
+#nav-sidebar a:link,
+#nav-sidebar a:visited {
+    display: block;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: #454545;
+    text-decoration: none;
+}
+
+#nav-sidebar a:hover {
+    background: #e7e7e9;
+    color: var(--admin-text);
+}
+
+#nav-sidebar .current-app .section,
+#nav-sidebar .current-model {
+    border-radius: 8px;
+    background: #e5e5e7;
+    color: var(--admin-text);
+    font-weight: 600;
+}
+
+#nav-filter {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+#toggle-nav-sidebar {
+    border-color: var(--admin-border);
+    background: var(--admin-surface);
+    color: var(--admin-text);
+}
+
+#header {
+    min-height: 60px;
+    padding: 12px 24px;
+    border-bottom: 1px solid rgb(255 255 255 / 72%);
+    background: rgb(255 255 255 / 65%);
+    color: var(--admin-text);
+    box-shadow: 0 8px 26px rgb(58 76 112 / 8%);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+    color: var(--admin-text);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+#user-tools {
+    padding: 4px 0;
+    color: var(--admin-muted);
+    font-size: 12px;
+}
+
+#user-tools a:link,
+#user-tools a:visited {
+    color: var(--admin-accent);
+    text-decoration: underline;
+    text-decoration-color: rgb(40 103 232 / 35%);
+    text-underline-offset: 3px;
+}
+
+#user-tools a:hover {
+    color: var(--admin-accent-hover);
+}
+
+.breadcrumbs {
+    padding: 12px 28px;
+    background: rgb(255 255 255 / 25%);
+    color: var(--admin-muted);
+    border-bottom: 1px solid var(--admin-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.breadcrumbs a:link,
+.breadcrumbs a:visited {
+    color: var(--admin-accent);
+}
+
+#content {
+    padding: 28px;
+}
+
+#content h1 {
+    margin: 0 0 20px;
+    color: var(--admin-text);
+    font-size: 25px;
+    font-weight: 650;
+    letter-spacing: -0.035em;
+}
+
+#content h2,
+#content h3 {
+    color: var(--admin-text);
+    font-weight: 600;
+}
+
+#content-main {
+    min-width: 0;
+}
+
+.aligned label {
+    color: var(--admin-text);
+    font-weight: 550;
+}
+
+fieldset {
+    border-color: var(--admin-border);
+}
+
+.module,
+#changelist,
+#changelist-filter,
+.inline-group,
+.submit-row {
+    overflow: hidden;
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    background: var(--admin-surface);
+    box-shadow: var(--admin-shadow);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    padding: 13px 16px;
+    background: rgb(255 255 255 / 50%);
+    color: var(--admin-text);
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(100 116 139 / 12%);
+}
+
+.module table {
+    width: 100%;
+}
+
+.module th,
+.module td {
+    padding: 12px 16px;
+    border-color: var(--admin-border);
+}
+
+.dashboard .module table th {
+    width: auto;
+}
+
+.dashboard .module table td a {
+    font-weight: 500;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#result_list thead th {
+    padding: 11px 12px;
+    background: rgb(255 255 255 / 60%);
+    color: var(--admin-muted);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+#result_list tbody tr {
+    background: rgb(255 255 255 / 25%);
+}
+
+#result_list tbody tr:hover {
+    background: rgb(255 255 255 / 72%);
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+#result_list tbody tr:last-child td,
+#result_list tbody tr:last-child th {
+    border-bottom: 0;
+}
+
+.paginator,
+.pagination {
+    padding: 12px 16px;
+    border-top: 1px solid var(--admin-border);
+    color: var(--admin-muted);
+}
+
+#changelist-search,
+#toolbar,
+.filtered #changelist-form {
+    margin-bottom: 16px;
+}
+
+#changelist-filter {
+    padding: 0 14px 14px;
+}
+
+#changelist-filter h2 {
+    margin: 0 -14px 10px;
+    padding: 14px;
+    background: rgb(255 255 255 / 50%);
+    color: var(--admin-text);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+#changelist-filter h3 {
+    color: var(--admin-muted);
+    font-size: 11px;
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+input,
+textarea,
+select,
+.vTextField,
+.vLargeTextField {
+    max-width: 100%;
+    padding: 9px 11px;
+    color: var(--admin-text);
+    border: 1px solid rgb(100 116 139 / 23%);
+    border-radius: 9px;
+    background: rgb(255 255 255 / 78%);
+    font: inherit;
+    box-shadow: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.vTextField:focus,
+.vLargeTextField:focus {
+    border-color: var(--admin-accent);
+    outline: 3px solid rgb(16 163 127 / 14%);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--admin-accent);
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+.button,
+a.button,
+.submit-row input,
+.object-tools a:link,
+.object-tools a:visited {
+    min-height: 36px;
+    padding: 8px 14px;
+    border: 1px solid var(--admin-accent);
+    border-radius: 9px;
+    background: var(--admin-accent);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 550;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.button:hover,
+a.button:hover,
+.submit-row input:hover,
+.object-tools a:hover {
+    border-color: var(--admin-accent-hover);
+    background: var(--admin-accent-hover);
+    color: #ffffff;
+}
+
+button:active,
+input[type="submit"]:active,
+.button:active {
+    transform: translateY(1px);
+}
+
+.deletelink,
+a.deletelink,
+.submit-row .deletelink {
+    border-color: #dc4c4c;
+    background: #dc4c4c;
+    color: #ffffff;
+}
+
+.deletelink:hover,
+a.deletelink:hover,
+.submit-row .deletelink:hover {
+    border-color: #bd3535;
+    background: #bd3535;
+    color: #ffffff;
+}
+
+.submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px;
+}
+
+.messagelist {
+    margin: 0 0 18px;
+    padding: 0;
+}
+
+.messagelist li {
+    margin: 0 0 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    background: var(--admin-surface);
+    box-shadow: var(--admin-shadow);
+}
+
+.messagelist li.success {
+    border-color: #a7dfca;
+    background: #effaf5;
+}
+
+.messagelist li.warning {
+    border-color: #f2d18a;
+    background: #fff9e9;
+}
+
+.messagelist li.error,
+.errornote {
+    border-color: #efb4b4;
+    border-radius: 10px;
+    background: #fff3f3;
+    color: #9f2929;
+}
+
+.errorlist {
+    color: #b42318;
+}
+
+.help,
+p.help,
+form p.help {
+    color: var(--admin-muted);
+}
+
+#footer {
+    padding: 20px 28px;
+    color: var(--admin-muted);
+}
+
+.login #content {
+    display: grid;
+    min-height: calc(100vh - 60px);
+    place-items: center;
+}
+
+.login #content-main {
+    width: min(100%, 420px);
+    padding: 28px;
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    background: var(--admin-surface);
+    box-shadow: var(--admin-shadow);
+    backdrop-filter: blur(24px) saturate(145%);
+    -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+@media (max-width: 767px) {
+    #header {
+        padding: 12px 16px;
+    }
+
+    #content {
+        padding: 20px 16px;
+    }
+
+    .breadcrumbs {
+        padding: 10px 16px;
+    }
+
+    #content h1 {
+        font-size: 22px;
+    }
+
+    #changelist-filter {
+        margin-top: 16px;
+    }
+
+    #nav-sidebar {
+        position: static;
+        max-height: none;
+        border-right: 0;
+        border-bottom: 1px solid var(--admin-border);
+    }
+
+    .submit-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .submit-row input {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .module,
+    #changelist,
+    #changelist-filter,
+    .inline-group,
+    .submit-row,
+    .login #content-main {
+        background: rgb(255 255 255 / 96%);
+    }
+}
