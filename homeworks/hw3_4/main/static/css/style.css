@@ -1,0 +1,338 @@
+:root {
+    --ink: #152b2a;
+    --cream: #fff2c7;
+    --sun: #ffc857;
+    --coral: #ff6b57;
+    --pink: #ed5aa8;
+    --cyan: #64d8d1;
+    --palm: #147d75;
+    --white: #fffdf5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--ink);
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 85% 12%, rgba(255, 200, 87, 0.95) 0 5%, transparent 5.2%),
+        linear-gradient(145deg, rgba(255, 107, 87, 0.18), transparent 32%),
+        linear-gradient(180deg, #9de4d8 0, #d7f2cb 48%, #fff2c7 48%, #f8cf82 100%);
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    width: 260px;
+    height: 420px;
+    border: 12px solid rgba(20, 125, 117, 0.12);
+    border-radius: 50%;
+    transform: rotate(28deg);
+}
+
+body::before {
+    left: -190px;
+    bottom: -100px;
+}
+
+body::after {
+    right: -210px;
+    top: 180px;
+    transform: rotate(-22deg);
+}
+
+.page-shell {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 52px 0 70px;
+}
+
+.hero,
+.form-heading,
+.empty-state {
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+.hero {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: var(--palm);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+h1,
+h2 {
+    margin: 0;
+    line-height: 0.95;
+}
+
+h1 {
+    max-width: 760px;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: clamp(3.2rem, 9vw, 7.2rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 14px 20px;
+    border: 3px solid var(--ink);
+    border-radius: 4px 18px 4px 18px;
+    color: var(--ink);
+    background: var(--sun);
+    box-shadow: 6px 6px 0 var(--ink);
+    font-weight: 900;
+    text-decoration: none;
+    transition: 150ms ease;
+}
+
+.primary-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--ink);
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.course-card {
+    position: relative;
+    min-height: 300px;
+    overflow: hidden;
+    border: 3px solid var(--ink);
+    border-radius: 6px 30px 6px 30px;
+    background: var(--white);
+    box-shadow: 8px 8px 0 rgba(21, 43, 42, 0.16);
+}
+
+.course-card:nth-child(3n + 1) {
+    transform: rotate(-1deg);
+}
+
+.course-card:nth-child(3n + 2) {
+    transform: translateY(12px) rotate(1deg);
+}
+
+.course-card:nth-child(3n) {
+    background: linear-gradient(145deg, var(--white) 65%, #ffd4df);
+}
+
+.card-number {
+    position: absolute;
+    right: -8px;
+    top: -24px;
+    color: rgba(237, 90, 168, 0.14);
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 7.5rem;
+}
+
+.card-body {
+    min-height: 225px;
+    padding: 28px 24px 18px;
+}
+
+.course-label {
+    margin: 0 0 12px;
+    color: var(--pink);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.course-card h2 {
+    position: relative;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 2.35rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.description {
+    position: relative;
+    margin: 18px 0 0;
+    line-height: 1.55;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    border-top: 3px solid var(--ink);
+    background: var(--cyan);
+}
+
+.seat-badge {
+    font-weight: 900;
+}
+
+.edit-link {
+    color: var(--ink);
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.edit-link:hover,
+.back-link:hover {
+    color: var(--pink);
+}
+
+.empty-state {
+    max-width: 680px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.empty-state h2 {
+    margin-bottom: 28px;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    text-transform: uppercase;
+}
+
+.form-shell {
+    max-width: 760px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--ink);
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.form-panel {
+    border: 3px solid var(--ink);
+    border-radius: 8px 36px 8px 36px;
+    background: rgba(255, 253, 245, 0.94);
+    box-shadow: 12px 12px 0 rgba(21, 43, 42, 0.18);
+}
+
+.form-heading {
+    padding: 34px 38px 24px;
+    border-bottom: 3px solid var(--ink);
+    background: var(--sun);
+}
+
+.form-heading h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+}
+
+form {
+    display: grid;
+    gap: 22px;
+    padding: 34px 38px 40px;
+}
+
+.field-group {
+    display: grid;
+    gap: 8px;
+}
+
+.field-group label {
+    font-weight: 900;
+}
+
+.field-group input,
+.field-group textarea,
+.field-group select {
+    width: 100%;
+    border: 2px solid var(--ink);
+    border-radius: 4px 12px 4px 12px;
+    padding: 13px 14px;
+    color: var(--ink);
+    background: var(--white);
+    font: inherit;
+}
+
+.field-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.field-group input:focus,
+.field-group textarea:focus,
+.field-group select:focus {
+    outline: 4px solid rgba(100, 216, 209, 0.65);
+    border-color: var(--palm);
+}
+
+.field-error,
+.errorlist {
+    color: #b91c1c;
+    font-weight: 900;
+}
+
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.submit-button {
+    width: 100%;
+    border: 3px solid var(--ink);
+    cursor: pointer;
+}
+
+@media (max-width: 850px) {
+    .course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero {
+        align-items: start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 560px) {
+    .page-shell {
+        width: min(100% - 24px, 1120px);
+        padding-top: 28px;
+    }
+
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-card:nth-child(n) {
+        transform: none;
+    }
+
+    .primary-button {
+        width: 100%;
+    }
+
+    .form-heading,
+    form {
+        padding-inline: 22px;
+    }
+}

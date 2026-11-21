@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if course %}Редактирование курса{% else %}Новый курс{% endif %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="page-shell form-shell">
+        <a class="back-link" href="{% url 'course_list' %}">← К каталогу</a>
+
+        <main class="form-panel">
+            <div class="form-heading">
+                <p class="eyebrow">Leonida State · Course Office</p>
+                <h1>{% if course %}Редактировать курс{% else %}Новый курс{% endif %}</h1>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="field-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button class="primary-button submit-button" type="submit">
+                    Сохранить курс
+                </button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

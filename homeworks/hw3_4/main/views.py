@@ -8,7 +8,7 @@ def course_list(request):
     return render(request, 'course_list.html', {'courses': courses})
 
 
-def course_create(request):
+def course_add(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -20,8 +20,8 @@ def course_create(request):
     return render(request, 'course_form.html', {'form': form})
 
 
-def course_edit(request, course_id):
-    course = get_object_or_404(Course, id=course_id)
+def course_edit(request, pk):
+    course = get_object_or_404(Course, pk=pk)
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():

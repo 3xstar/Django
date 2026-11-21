@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог курсов — Леонида</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Leonida State · Summer Semester</p>
+                <h1>Каталог курсов</h1>
+            </div>
+            <a class="primary-button" href="{% url 'course_add' %}">
+                <span>＋</span> Добавить курс
+            </a>
+        </header>
+
+        {% if courses %}
+            <main class="course-grid">
+                {% for course in courses %}
+                    <article class="course-card">
+                        <div class="card-number">{{ forloop.counter|stringformat:"02d" }}</div>
+                        <div class="card-body">
+                            <p class="course-label">Курс</p>
+                            <h2>{{ course.title }}</h2>
+                            <p class="description">{{ course.description|truncatewords:18 }}</p>
+                        </div>
+                        <footer class="card-footer">
+                            <span class="seat-badge">{{ course.seats }} мест</span>
+                            <a class="edit-link" href="{% url 'course_edit' course.pk %}">
+                                Редактировать →
+                            </a>
+                        </footer>
+                    </article>
+                {% endfor %}
+            </main>
+        {% else %}
+            <main class="empty-state">
+                <p class="eyebrow">Пляж тёплый. Расписание пустое.</p>
+                <h2>Курсов пока нет</h2>
+                <a class="primary-button" href="{% url 'course_add' %}">Создать первый курс</a>
+            </main>
+        {% endif %}
+    </div>
+</body>
+</html>
