@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+    <section class="card">
+        <h2>Вход</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Войти</button>
+        </form>
+        <p><a href="{% url 'main:register' %}">Нет аккаунта? Зарегистрироваться</a></p>
+    </section>
+{% endblock %}
