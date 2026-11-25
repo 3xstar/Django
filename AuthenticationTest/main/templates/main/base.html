@@ -1,27 +1,88 @@
 {% load static %}
-<DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Мой проект{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <meta name="theme-color" content="#11100f">
+    <title>{% block title %}The Gothic Library{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}?v=2">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <h1>Мой Django-проект</h1>
-            <nav>
-                <a href="/">Главная</a>
-                <a href="/admin/">Админка</a>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="{% url 'main:home' %}">
+                <span class="brand-mark" aria-hidden="true">✦</span>
+                <span class="brand-copy">
+                    <strong>THE GOTHIC LIBRARY</strong>
+                    <small>ARCHIVE OF STORIES</small>
+                </span>
+            </a>
+
+            <a class="sidebar-new" href="{% url 'main:books' %}">
+                <span aria-hidden="true">＋</span>
+                <span>Найти новую книгу</span>
+            </a>
+
+            <p class="sidebar-label">ЧИТАЛЬНЫЙ ЗАЛ</p>
+            <nav class="sidebar-nav" aria-label="Основная навигация">
+                {% if user.is_authenticated %}
+                    <a class="sidebar-link" href="{% url 'main:home' %}">
+                        <span class="nav-glyph" aria-hidden="true">▤</span>Моя полка
+                    </a>
+                {% endif %}
+                <a class="sidebar-link" href="{% url 'main:books' %}">
+                    <span class="nav-glyph" aria-hidden="true">⌕</span>Каталог
+                </a>
             </nav>
+
+            <div class="sidebar-spacer"></div>
+            <div class="sidebar-account">
+                <p class="sidebar-label">АККАУНТ</p>
+                {% if user.is_authenticated %}
+                    <div class="user-card">
+                        <span class="user-avatar">{{ user.username|slice:":1"|upper }}</span>
+                        <span class="user-copy">
+                            <strong>{{ user.username }}</strong>
+                            <small>Хранитель полки</small>
+                        </span>
+                    </div>
+                    <form method="post" action="{% url 'main:logout' %}">
+                        {% csrf_token %}
+                        <button class="sidebar-logout" type="submit">
+                            <span aria-hidden="true">↪</span>Выйти
+                        </button>
+                    </form>
+                {% else %}
+                    <a class="sidebar-link" href="{% url 'main:login' %}">Войти</a>
+                    <a class="sidebar-register" href="{% url 'main:register' %}">Создать аккаунт</a>
+                {% endif %}
+            </div>
+        </aside>
+
+        <div class="main-column">
+            <header class="topbar">
+                <div>
+                    <p class="topbar-kicker">THE ARCHIVE <span>/</span> {% block page_section %}ЧИТАЛЬНЫЙ ЗАЛ{% endblock %}</p>
+                    <p class="topbar-note">Тихое место для больших историй</p>
+                </div>
+                <span class="topbar-seal" aria-hidden="true">☾</span>
+            </header>
+            <main class="content-container">
+                {% if messages %}
+                    <div class="messages" role="status">
+                        {% for message in messages %}
+                            <p class="message {{ message.tags }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </main>
+            <footer class="app-footer">
+                <span>THE GOTHIC LIBRARY</span>
+                <span>ОСТАВЬТЕ ВНЕШНИЙ МИР ЗА ДВЕРЬЮ</span>
+            </footer>
         </div>
-    </header>
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
-    <footer class="site-footer">
-        <div class="container">Django Student Template</div>
-    </footer>
+    </div>
 </body>
 </html>

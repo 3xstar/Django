@@ -1,0 +1,49 @@
+{% extends "main/base.html" %}
+
+{% block title %}Моя полка — The Gothic Library{% endblock %}
+{% block page_section %}МОЯ ПОЛКА{% endblock %}
+
+{% block content %}
+    <section class="welcome-panel">
+        <div>
+            <p class="eyebrow">ЛИЧНАЯ БИБЛИОТЕКА · PRIVATE COLLECTION</p>
+            <h1>Привет, {{ user.username }}!</h1>
+            <p>Здесь собраны книги, которые вы добавили для себя.</p>
+        </div>
+        <a class="button button-light" href="{% url 'main:books' %}">＋ Найти книгу</a>
+    </section>
+
+    <section class="section-block" aria-labelledby="my-books-heading">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">THE PRIVATE STACKS</p>
+                <h2 id="my-books-heading">Мои книги</h2>
+            </div>
+            <span class="count-badge">{{ my_books|length }}</span>
+        </div>
+        <div class="book-grid">
+            {% for borrowed_book in my_books %}
+                <article class="book-card">
+                    <div class="book-cover" aria-hidden="true">
+                        <span>{{ borrowed_book.book.title|slice:":1"|upper }}</span>
+                    </div>
+                    <div class="book-details">
+                        <h3>{{ borrowed_book.book.title }}</h3>
+                        <p class="book-author">{{ borrowed_book.book.author }}</p>
+                        <form method="post" action="{% url 'main:delete_borrowed_book' borrowed_book.id %}">
+                            {% csrf_token %}
+                            <button class="button button-danger button-small" type="submit">Убрать из списка</button>
+                        </form>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty-state">
+                    <span class="empty-icon" aria-hidden="true">✦</span>
+                    <h3>Пока ни одной истории</h3>
+                    <p>Загляните в каталог и добавьте первую книгу.</p>
+                    <a class="button button-primary" href="{% url 'main:books' %}">Открыть каталог</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

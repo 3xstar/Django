@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+{% block title %}Каталог — The Gothic Library{% endblock %}
+{% block page_section %}КАТАЛОГ{% endblock %}
+
+{% block content %}
+    <section class="catalog-intro">
+        <p class="eyebrow">THE OPEN SHELVES · ВЫБЕРИТЕ СЛЕДУЮЩУЮ ИСТОРИЮ</p>
+        <h1>Каталог книг</h1>
+        <p>Добавляйте понравившиеся книги в свою личную коллекцию.</p>
+    </section>
+
+    <section class="section-block" aria-label="Список книг">
+        <div class="book-grid">
+            {% for book in books %}
+                <article class="book-card">
+                    <div class="book-cover" aria-hidden="true">
+                        <span>{{ book.title|slice:":1"|upper }}</span>
+                    </div>
+                    <div class="book-details">
+                        <h2>{{ book.title }}</h2>
+                        <p class="book-author">{{ book.author }}</p>
+                        {% if user.is_authenticated %}
+                            {% if book.pk in my_book_ids %}
+                                <span class="added-label">Уже на вашей полке</span>
+                            {% else %}
+                                <form method="post" action="{% url 'main:borrow_book' book.pk %}">
+                                    {% csrf_token %}
+                                    <button class="button button-primary button-small" type="submit">Добавить в мои книги</button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <a class="button button-primary button-small" href="{% url 'main:login' %}">Войдите, чтобы добавить</a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty-state">
+                    <span class="empty-icon" aria-hidden="true">✦</span>
+                    <h2>Каталог пока пуст</h2>
+                    <p>Новые книги скоро появятся здесь.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

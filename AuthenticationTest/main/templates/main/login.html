@@ -1,15 +1,18 @@
 {% extends "main/base.html" %}
 
 {% block title %}Вход{% endblock %}
+{% block page_section %}ВОЗВРАЩЕНИЕ{% endblock %}
 
 {% block content %}
-    <section class="card">
-        <h2>Вход</h2>
+    <section class="auth-card">
+        <p class="eyebrow">ВОЗВРАЩЕНИЕ В АРХИВ</p>
+        <h1>Войти в аккаунт</h1>
+        <p class="muted">Продолжите собирать свою личную книжную полку.</p>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Войти</button>
+            <button class="button button-primary button-wide" type="submit">Войти</button>
         </form>
-        <p><a href="{% url 'main:register' %}">Нет аккаунта? Зарегистрироваться</a></p>
+        <p class="auth-switch">Впервые здесь? <a href="{% url 'main:register' %}">Создать аккаунт</a></p>
     </section>
 {% endblock %}

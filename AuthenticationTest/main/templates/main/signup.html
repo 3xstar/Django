@@ -1,15 +1,18 @@
 {% extends "main/base.html" %}
 
 {% block title %}Регистрация{% endblock %}
+{% block page_section %}НОВЫЙ ЧИТАТЕЛЬ{% endblock %}
 
 {% block content %}
-    <section class="card">
-        <h2>Регистрация</h2>
+    <section class="auth-card">
+        <p class="eyebrow">ОТКРОЙТЕ ДВЕРЬ</p>
+        <h1>Создать аккаунт</h1>
+        <p class="muted">Зарегистрируйтесь, чтобы сохранять книги в своей коллекции.</p>
         <form method="post">
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="form-errors">
+                <div class="form-errors" role="alert">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
@@ -22,13 +25,13 @@
                         <div class="field-help">{{ field.help_text|safe }}</div>
                     {% endif %}
                     {% for error in field.errors %}
-                        <div class="field-error">{{ error }}</div>
+                        <div class="field-error" role="alert">{{ error }}</div>
                     {% endfor %}
                 </div>
             {% endfor %}
 
-            <button type="submit">Зарегистрироваться</button>
+            <button class="button button-primary button-wide" type="submit">Зарегистрироваться</button>
         </form>
-        <p><a href="{% url 'main:login' %}">Уже есть аккаунт? Войти</a></p>
+        <p class="auth-switch">Уже есть аккаунт? <a href="{% url 'main:login' %}">Войти</a></p>
     </section>
 {% endblock %}
